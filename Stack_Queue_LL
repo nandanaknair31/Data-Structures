@@ -1,0 +1,149 @@
+#include <stdlib.h>
+#include <stdio.h>
+
+struct Node
+{
+    int data;
+    struct  Node *next;
+};
+
+struct Node *headstack = NULL;
+
+void push(int val)
+{
+    struct Node *newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data=val;
+    newNode->next=headstack;
+    headstack=newNode;
+}
+
+void pop()
+{
+    struct Node *temp;
+    if (headstack==NULL)
+    {
+        printf("Stack is empty \n");
+    }
+    else
+    {
+        printf("Popped element = %d \n", headstack->data);
+        temp=headstack;
+        headstack=headstack->next;
+        free(temp);
+    }
+}
+
+void displaystack()
+{
+    struct Node *temp = headstack;
+    while (temp!=NULL)
+    {
+        printf("%d -> ", temp->data);
+        temp=temp->next;
+    }
+    printf("NULL\n");
+    }
+
+struct Node *front=NULL, *rear=NULL;
+void enqueue(int val)
+{
+    struct Node *newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data=val;
+    newNode->next=NULL;
+
+    if(front==NULL && rear==NULL)
+        front=rear=newNode;
+    else
+    {
+        rear->next=newNode;
+        rear=newNode;
+    }
+}
+
+void dequeue()
+{
+    struct Node *temp;
+    if (front==NULL)
+        printf("Queue is empty, unable to perform dequeue");
+    else
+    {
+        temp=front;
+        front=front->next;
+        if (front==NULL)
+            rear=NULL;
+        free(temp);
+    }
+}
+
+void displayqueue()
+{
+    struct Node *temp=front;
+    while(temp)
+    {
+        printf("%d -> ", temp->data);
+        temp=temp->next;
+    }
+    printf("NULL\n");
+}
+
+int main()
+
+{
+    int n=100;
+    int choice=100;
+    int value=0;
+    while (n!=0)
+    {
+        printf("Enter 1 to implement Stack, Enter 2 to implement Queue, and 0 to exit the program \n");
+        scanf("%d", &n);
+        switch(n)
+        {
+            case 1 : {choice =100;
+                      while (choice!=0)
+                        {
+                            printf("Enter 1 to push to the Stack, Enter 2 to pop from the Stack, Enter 3 to display the contents of the Stack and 0 to exit Stack implementation \n");
+                            scanf("%d", &choice);
+                            switch(choice)
+                            {
+                                case 1 : printf("Enter the value to be pushed : \n");
+                                         scanf("%d", &value);
+                                         push(value);
+                                         break;
+                                case 2 : pop();
+                                         break;
+                                case 3 : displaystack();
+                                         break;
+                                case 0 : printf("Exiting Stack \n");
+                                         break;
+                                default : printf("Wrong choice! \n");
+                            }
+                        }
+                      break;}
+             case 2 : {choice = 100;
+                       while (choice!=0)
+                        {
+                            printf("Enter 1 to push to add a value to the Queue, Enter 2 to delete a value from the queue, Enter 3 to display the contents of the queue and 0 to exit Queue implementation \n");
+                            scanf("%d", &choice);
+                            switch(choice)
+                            {
+                                case 1 : printf("Enter the value to be added : \n");
+                                         scanf("%d", &value);
+                                         enqueue(value);
+                                         break;
+                                case 2 : dequeue();
+                                         break;
+                                case 3 : displayqueue();
+                                         break;
+                                case 0 : printf("Exiting queue \n");
+                                         break;
+                                default : printf("Wrong choice! \n");
+                            }
+                        }
+                       break;}
+               case 0 : printf("Exiting the program \n");
+                        break;
+               default : printf("Wrong choice entered \n");
+        }
+    }
+return 0;
+}
